@@ -7,18 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GuildCore.Mvc.Models;
 using GuildCore.Entities;
-using GuildCore.Services.Category;
 
 namespace GuildCore.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        public ICategoryService _generalDbContext;
+        //public ICategoryService _generalDbContext;
 
-        public HomeController(ICategoryService generalDbContext)
-        {
-            this._generalDbContext = generalDbContext;
-        }
+        //public HomeController(ICategoryService generalDbContext)
+        //{
+        //    this._generalDbContext = generalDbContext;
+        //}
 
 
         private readonly ILogger<HomeController> _logger;
@@ -30,7 +29,7 @@ namespace GuildCore.Mvc.Controllers
 
         public IActionResult Index()
         {
-            var list = _generalDbContext.getAll();
+            ViewData["Title"] = "首页"; 
             return View();
         }
 

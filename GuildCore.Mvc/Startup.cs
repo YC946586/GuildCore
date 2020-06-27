@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GuildCore.Entities;
-using GuildCore.Services.Category;
+using GuildCore.Services;
+using GuildCore.Services.BannerServer;
+using GuildCore.Services.NewServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,12 +30,23 @@ namespace GuildCore.Mvc
         {
             services.AddControllersWithViews();
             //配置数据库
-            services.AddDbContextPool<GeneralDbContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContextPool<GeneralDbContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings")));
 
             //权限过滤
             services.AddAuthentication();
+            services.AddTransient<BannerService>();
+            services.AddTransient<NewService>();
+            services.AddTransient<GeneralDbContext>();
+            
             //依赖注入
-            services.AddScoped<ICategoryService, CategoryService>();
+            //services.AddScoped<IRepository, CategoryService>();
+            //services.AddScoped<UnitOfWork, UnitOfWork<YunSourseContext>>();//注入UOW依赖，确保每次请求都是同一个对象
+
+            services.AddMvc();
+            using (var database = new GeneralDbContext())    //新增
+            {
+                database.Database.EnsureCreated(); //如果没有创建数据库会自动创建，最为关键的一句代码
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
