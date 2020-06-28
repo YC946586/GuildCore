@@ -2,6 +2,7 @@
 using GuildCore.Entities.Category;
 using GuildCore.Entities.Request;
 using GuildCore.Entities.Response;
+using GuildCore.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

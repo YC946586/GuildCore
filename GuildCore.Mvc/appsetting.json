@@ -1,11 +1,12 @@
 {
+  "GetConnectionSqlService": {
+    "ConnectionSqlService": "Data Source= F:\\Data.DB"
+  },
   "Logging": {
+    "IncludeScopes": false,
     "LogLevel": {
       "Default": "Warning"
     }
-  },
-  "AllowedHosts": "*",
-  "ConnectionStrings": {
-    "MyContext": "Filename=F:\\Data.DB"
   }
+
 }

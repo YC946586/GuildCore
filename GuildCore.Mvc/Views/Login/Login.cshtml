@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = null;
+}
+@model GuildCore.Application.User.Dto.UserModelDto
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div class="loginBox">
+        <div class="signContent">
+            <div class="signContainer">
+                <form method="post" asp-action="Login">
+                    <div class="active">
+                        <div class="phoneInputGroup">
+                            <label class="inputLabel phoneLabel">
+                                <input type="tel" asp-for="Username" name="Username" id="Username" placeholder="手机号或者邮箱" />
+                            </label>
+                        </div>
+                        <div class="phoneInputGroup">
+                            <label class="inputLabel phoneLabel">
+                                <input type="password" asp-for="Password" name="Password" id="Password" placeholder="密码" />
+                            </label>
+                        </div>
+                        <button type="submit" class="button fromSubmit">登录</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        function Login() {
+            var formData = new FormData(document.getElementById("loginFrom"));
+            $.ajax({
+                type: 'post',
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                url: '/Login/GetSignatureToken',
+                data: formData,
+                success: function (res) {
+                    if (res.code == 100) {
+                        parent.reload();
+                    }
+                    else {
+                        alert(res.result);
+                    }
+                }
+
+
+            })
+        }
+    </script>
+</body>
+</html>

@@ -6,25 +6,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GuildCore.Mvc.Models;
-using GuildCore.Entities;
+using Microsoft.AspNetCore.Authorization;
+using GuildCore.Common;
+using GuildCore.Application.User.Dto;
+using GuildCore.Application.User;
 
 namespace GuildCore.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        //public ICategoryService _generalDbContext;
-
-        //public HomeController(ICategoryService generalDbContext)
-        //{
-        //    this._generalDbContext = generalDbContext;
-        //}
-
-
+        private readonly ILoginService _loginService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,ILoginService loginService)
         {
             _logger = logger;
+            _loginService = loginService;
         }
 
         public IActionResult Index()
@@ -38,6 +35,7 @@ namespace GuildCore.Mvc.Controllers
             return View();
         }
 
+    
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

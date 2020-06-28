@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GuildCore.Domain.DomainService\GuildCore.Domain.DomainService.csproj" />
+    <ProjectReference Include="..\GuildCore.Domain.Model\GuildCore.Domain.Model.csproj" />
+    <ProjectReference Include="..\GuildCore.Domain.Repository\GuildCore.Domain.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GuildCore.Entities;
-using GuildCore.Services;
-using GuildCore.Services.BannerServer;
-using GuildCore.Services.NewServer;
+using GuildCore.Common.DomainInterfaces;
+using GuildCore.Domain.Repository;
+using GuildCore.EntityFrameworkCore;
+using GuildCore.Mvc.Filter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GuildCore.Common.IocHelper;
+using Autofac.Configuration;
 
 namespace GuildCore.Mvc
 {
@@ -34,19 +37,37 @@ namespace GuildCore.Mvc
 
             //权限过滤
             services.AddAuthentication();
-            services.AddTransient<BannerService>();
-            services.AddTransient<NewService>();
-            services.AddTransient<GeneralDbContext>();
-            
+            //services.AddTransient<BannerService>();
+            //services.AddTransient<NewService>();
+           
             //依赖注入
             //services.AddScoped<IRepository, CategoryService>();
             //services.AddScoped<UnitOfWork, UnitOfWork<YunSourseContext>>();//注入UOW依赖，确保每次请求都是同一个对象
 
             services.AddMvc();
-            using (var database = new GeneralDbContext())    //新增
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient<IMyContext, GeneralDbContext>();
+            services.AddDbContext<GeneralDbContext>(options => options.UseSqlite("Data source=F:/Data.db"));
+
+            services.AddMvc(options =>
             {
-                database.Database.EnsureCreated(); //如果没有创建数据库会自动创建，最为关键的一句代码
-            }
+
+                options.Filters.Add(typeof(ProjectExceptionFilter));
+            });
+
+            //通过反射进行依赖注入
+            //services.AddTransient(typeof(IBaseRepository<>));
+
+            //通过反射进行依赖注入不能为空
+            //services.RegisterAssembly("GuildCore.Domain.Repository");
+            services.AddHttpContextAccessor();
+            services.AddControllers()
+            .AddControllersAsServices(); //属性注入必须加上这个 
+            services.Configure(this.Configuration);
+            //using (var database = new GeneralDbContext())    //新增
+            //{
+            //    database.Database.EnsureCreated(); //如果没有创建数据库会自动创建，最为关键的一句代码
+            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +99,7 @@ namespace GuildCore.Mvc
                     );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Login}/{id?}");
             });
         }
     }

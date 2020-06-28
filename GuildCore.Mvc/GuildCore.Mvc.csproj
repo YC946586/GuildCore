@@ -5,13 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GuildCore.Core\GuildCore.Core.csproj" />
-    <ProjectReference Include="..\GuildCore.Entities\GuildCore.Entities.csproj" />
-    <ProjectReference Include="..\GuildCore.Framework\GuildCore.Framework.csproj" />
-    <ProjectReference Include="..\GuildCore.Services\GuildCore.Services.csproj" />
+    <ProjectReference Include="..\GuildCore.Application\GuildCore.Application.csproj" />
+    <ProjectReference Include="..\GuildCore.Common\GuildCore.Common.csproj" />
+    <ProjectReference Include="..\GuildCore.Domain.Repository\GuildCore.Domain.Repository.csproj" />
+    <ProjectReference Include="..\GuildCore.EntityFrameworkCore\GuildCore.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\GuildCore.Infrastructure.DomainService\GuildCore.Infrastructure.DomainService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Configuration" Version="5.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">

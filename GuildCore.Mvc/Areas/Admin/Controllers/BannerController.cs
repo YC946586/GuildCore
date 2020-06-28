@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GuildCore.Entities.Request;
-using GuildCore.Entities.Response;
-using GuildCore.Services.BannerServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using GuildCore.Application.User;
+using GuildCore.Application.User.Dto;
+using GuildCore.Common;
 
 namespace GuildCore.Mvc.Areas.Admin.Controllers
 {
@@ -17,61 +17,27 @@ namespace GuildCore.Mvc.Areas.Admin.Controllers
     [Area("Admin")]
     public class BannerController : Controller
     {
-        private BannerService _banner;
-
+        private readonly ILoginService _loginService;
         /// <summary>
         /// 主机的参数
         /// </summary>
         private IHostEnvironment _Hosting;
-        public BannerController(BannerService bannerService, IHostEnvironment hosting)
+        public BannerController(ILoginService loginService)
         {
-            this._banner = bannerService;
-            this._Hosting = hosting;
+            _loginService = loginService;
+            //this._Hosting = hosting;
         }
 
         public IActionResult Index()
         {
-            var banner = _banner.GetBannerList();
-            return View(banner);
+            return View();
         }
 
         public IActionResult EditBanner()
         {
             return View();
         }
-
-        [HttpPost]
-        public async Task<JsonResult> Upload(AddBanner addBanner, IFormCollection Iform)
-        {
-            try
-            {
-                var files = Iform.Files;
-                if (Iform.Count != 0)
-                {
-                    var webPath = _Hosting.ContentRootPath;
-                    string relativeath = "\\BannerPic";
-                    string uplpadPath = webPath + relativeath;
-                    string[] fileType = new string[] { ".gif", ".jpg", ".png", ".jpeg", ".bmp" };
-
-                    string extension = Path.GetExtension(Iform.ToString());
-
-                    if (!Directory.Exists(uplpadPath)) Directory.CreateDirectory(uplpadPath);
-                    string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + uplpadPath;
-                    string filePath = uplpadPath + "\\" + fileName;
-                    using (var stream=new FileStream(filePath, FileMode.Create))
-                    {
-                        //await Iform
-                    }
-
-                }
-                return Json(new ResponseModel() { Code = 0, result = "上传失败" });
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
+       
         // GET: BannerController1/Details/5
         public ActionResult Details(int id)
         {
