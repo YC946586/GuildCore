@@ -25,7 +25,7 @@ namespace GuildCore.Mvc.Controllers
             return View();
         }
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(UserModelDto input)
         {
             if (ModelState.IsValid)

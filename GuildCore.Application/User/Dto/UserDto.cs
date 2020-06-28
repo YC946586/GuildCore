@@ -26,10 +26,10 @@ namespace GuildCore.Application.User.Dto
         /// 用户手机号码
         /// </summary>
         public string UserPhone { get; set; }
-        /// <summary>
-        /// 用户地址
-        /// </summary>
-        public Address Address { get; set; }
+        //// <summary>
+        ///// 用户地址
+        ///// </summary>
+        //public Address Address { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

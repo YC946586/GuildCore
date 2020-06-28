@@ -3,6 +3,7 @@ using GuildCore.Domain.Model.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GuildCore.Domain.Model.Entity
@@ -10,6 +11,8 @@ namespace GuildCore.Domain.Model.Entity
     /// <summary>
     /// 用户信息
     /// </summary>
+    /// 
+    [Table("UserInfo")]
     public class UserInfo : IAggregationRoot, ISoftDelete
     {
         #region 用户属性
@@ -35,10 +38,10 @@ namespace GuildCore.Domain.Model.Entity
         /// </summary>
         [StringLength(50)]
         public string UserPhone { get; private set; }
-        /// <summary>
-        /// 用户地址
-        /// </summary>
-        public Address Address { get; private set; }
+        ///// <summary>
+        ///// 用户地址
+        ///// </summary>
+        //public Address Address { get; private set; }
         /// <summary>
         /// 创建人id
         /// </summary>
@@ -78,7 +81,7 @@ namespace GuildCore.Domain.Model.Entity
             UserName = userName;
             UserPassword = userPassword;
             UserPhone = userPhone;
-            Address = address;
+            //Address = address;
             CreateUserId = createUserId;
             CreateUserName = createUserName;
             CreatDateTime = DateTime.Now;

@@ -45,25 +45,24 @@ namespace GuildCore.Mvc
             //services.AddScoped<UnitOfWork, UnitOfWork<YunSourseContext>>();//注入UOW依赖，确保每次请求都是同一个对象
 
             services.AddMvc();
+            services.AddDbContext<GeneralDbContext>(options => options.UseSqlite("Data source=Data.db"));
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IMyContext, GeneralDbContext>();
-            services.AddDbContext<GeneralDbContext>(options => options.UseSqlite("Data source=F:/Data.db"));
-
             services.AddMvc(options =>
             {
 
-                options.Filters.Add(typeof(ProjectExceptionFilter));
+                options.Filters.Add(typeof(ProjectExceptionFilter));// 异常过滤器 
             });
-
+           
             //通过反射进行依赖注入
             //services.AddTransient(typeof(IBaseRepository<>));
 
             //通过反射进行依赖注入不能为空
             //services.RegisterAssembly("GuildCore.Domain.Repository");
             services.AddHttpContextAccessor();
-            services.AddControllers()
-            .AddControllersAsServices(); //属性注入必须加上这个 
-            services.Configure(this.Configuration);
+            services.AddControllers() .AddControllersAsServices(); //属性注入必须加上这个 
+
+            services.Configure(Configuration);
             //using (var database = new GeneralDbContext())    //新增
             //{
             //    database.Database.EnsureCreated(); //如果没有创建数据库会自动创建，最为关键的一句代码

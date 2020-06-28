@@ -20,20 +20,7 @@ namespace GuildCore.Mvc
         public static AutofacServiceProvider Configure(this IServiceCollection services, IConfiguration configuration)
         {
            
-            //FluentValidation后台验证         
-            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(ProjectExceptionFilter)); // 异常过滤器 
-
-                //}).AddFluentValidation(fv =>
-                //{
-                //    //关闭或开启自带的验证  AddFluentValidation使用FluentValidation验证
-                //    fv.ConfigureClientsideValidation(enabled: true);
-
-            });
             //通过反射进行依赖注入
-
             //通过反射进行依赖注入不能为空
             //services.RegisterAssembly("ProjectCore.Domain.Repository.Interfaces", "ProjectCore.Infrastructure.Repository");
             services.RegisterAssembly("GuildCore.Application");

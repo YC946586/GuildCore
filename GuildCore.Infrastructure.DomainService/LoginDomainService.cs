@@ -31,6 +31,7 @@ namespace GuildCore.Infrastructure.DomainService
         /// <returns></returns>
         public async Task<HeaderResult<string>> VerificationUserLogin(string username, string password)
         {
+            var dd = _userRepository.LoadEntityAll();
             var user = await _userRepository.WhereLoadEntityAsNoTrackingAsync(e => e.UserName == username);
             if (user != null)
             {
